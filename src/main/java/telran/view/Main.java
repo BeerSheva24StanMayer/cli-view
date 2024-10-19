@@ -64,8 +64,7 @@ public class Main {
 
         LocalDate birthDate = io.readIsoDateRange("Enter date of birth of employee in format yyyy-MM-DD",
          "Wrong age, should be between " + MIN_AGE + " and " + MAX_AGE, 
-         LocalDate.of((LocalDate.now().getYear() - MAX_AGE), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()), 
-         LocalDate.of((LocalDate.now().getYear() - MIN_AGE), LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()));
+         LocalDate.now().minusYears(MAX_AGE), LocalDate.now().minusYears(MIN_AGE));
 
         Employee employee = new Employee(id, name, department, salary, birthDate);
         io.writeLine("You entered the following Employee data");

@@ -1,7 +1,6 @@
 package telran.view;
 
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.HashSet;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -39,21 +38,22 @@ public interface InputOutput {
      * @return Integer number
      */
     default Integer readInt(String prompt, String errorPrompt) {
-        return readObject(prompt, errorPrompt, str -> Integer.parseInt(str));     
+        return readObject(prompt, errorPrompt, Integer::parseInt);     
     }
 
     default Long readLong(String prompt, String errorPrompt) {
-        return readObject(prompt, errorPrompt, str -> Long.parseLong(str));
+        return readObject(prompt, errorPrompt, Long::parseLong);
     }
 
     default Double readDouble(String prompt, String errorPrompt) {
-        return readObject(prompt, errorPrompt, str -> Double.parseDouble(str));
+        return readObject(prompt, errorPrompt, Double::parseDouble);
     }
 
-    default Double readNumberRange(String prompt, String errorPrompt, double min, double max) throws Exception {
+    default Double readNumberRange(String prompt, String errorPrompt, double min, double max) {
         Double doubleRes = readDouble(prompt, errorPrompt);
         if (!(doubleRes >= min && doubleRes <= max)) {
             throw new IllegalArgumentException(errorPrompt);
+            // writeLine(errorPrompt);
         }
         return doubleRes;
     }
@@ -78,7 +78,7 @@ public interface InputOutput {
     }
 
     default LocalDate readIsoDate(String prompt, String errorPrompt) {
-        return readObject(prompt, errorPrompt, str -> LocalDate.parse(str));
+        return readObject(prompt, errorPrompt, LocalDate::parse);
     }
 
     default LocalDate readIsoDateRange(String prompt, String errorPrompt, LocalDate from,
