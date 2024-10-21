@@ -3,23 +3,25 @@ package telran.view;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-public class Menu implements Item{
-private String name;
-private Item[] items;
-private String symbol = "_";
-private int nSymbols = 15;
+public class Menu implements Item {
+    private String name;
+    private Item[] items;
+    private String symbol = "_";
+    private int nSymbols = 15;
 
-public Menu(Item...items) {
-this.items = Arrays.copyOf(items, items.length);
-}
+    public Menu(String name, Item... items) {
+        this.items = Arrays.copyOf(items, items.length);
+        this.name = name;
+    }
 
-public void setSymbol(String symbol) {
-    this.symbol = symbol;
-}
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
+    }
 
-public void setNsymbols(int nSymbols) {
-    this.nSymbols = nSymbols;
-}
+    public void setNsymbols(int nSymbols) {
+        this.nSymbols = nSymbols;
+    }
+
     @Override
     public String displayName() {
         return name;
@@ -40,14 +42,16 @@ public void setNsymbols(int nSymbols) {
             } catch (RuntimeException e) {
                 io.writeLine(e.getMessage());
             }
-        }while(running);
+        } while (running);
     }
 
     private void displayItems(InputOutput io) {
-        IntStream.range(0, items.length).forEach(i -> io.writeLine(String.format("%d. %s", i + 1, items[i].displayName())));
+        IntStream.range(0, items.length)
+                .forEach(i -> io.writeLine(String.format("%d. %s", i + 1, items[i].displayName())));
     }
 
     private void displayTitle(InputOutput io) {
+        io.writeLine("\n");
         io.writeString(symbol.repeat(nSymbols));
         io.writeString(name);
         io.writeLine(symbol.repeat(nSymbols));
